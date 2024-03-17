@@ -73,6 +73,21 @@ class UsersController {
       next(err);
     }
   }
+  async getUserArtilces(req, res, next) {
+    try {
+      const user = await userService
+        .findById(req.params.id)
+        .select("-password") // exclure le mot de passe
+        .populate("articles"); // les articles populaire
+      if (!user) {
+        throw new NotFoundError("Utilisateur non trouver");
+      }
+
+      res.json(user);
+    } catch (err) {
+      next(err);
+    }
+  }
 }
 
 module.exports = new UsersController();

@@ -1,9 +1,8 @@
 const Article = require("./articles.schema");
 
-class ArticleService {
+class ArticlesService {
   create(data) {
     const article = new Article(data);
-
     return article.save();
   }
   update(id, data) {
@@ -12,6 +11,9 @@ class ArticleService {
   delete(id) {
     return Article.deleteOne({ _id: id });
   }
+  getUserArticles(user) {
+    return Article.find({ user: user }).populate("user");
+  }
 }
 
-module.exports = ArticleService();
+module.exports = new ArticlesService();
