@@ -3,6 +3,7 @@ const UnauthorizedError = require("../../errors/unauthorized");
 const jwt = require("jsonwebtoken");
 const config = require("../../config");
 const usersService = require("./users.service");
+const articlesService = require("../articles/articles.service");
 
 class UsersController {
   async getAll(req, res, next) {
@@ -75,15 +76,14 @@ class UsersController {
   }
   async getUserArtilces(req, res, next) {
     try {
-      const user = await userService
-        .findById(req.params.id)
-        .select("-password") // exclure le mot de passe
-        .populate("articles"); // les articles populaire
-      if (!user) {
-        throw new NotFoundError("Utilisateur non trouver");
-      }
-
-      res.json(user);
+      // id from given route
+      const user = req.params.id;
+      const articles = await articlesService.getUserArticles(user);
+      // hide the user's password
+      articles.map((article) => {
+        article.user.password = undefined;
+      });
+      res.json(articles);
     } catch (err) {
       next(err);
     }

@@ -17,9 +17,7 @@ const articleSchema = Schema({
   },
 });
 
-let Article;
-
-module.exports = Article = model("Article", articleSchema);
+module.exports = model("article", articleSchema);
 
 /*async function test() {
   const articles = await Article.find().populate({
@@ -29,12 +27,12 @@ module.exports = Article = model("Article", articleSchema);
   });
   console.log(articles.filter((article) => article.user));
 }*/
-async function test() {
-  const articles = await Article.find();
-  new Article({
-    title: "titre 3",
-    content: "sdjqcsqjdhqdhj",
-    user: "65d442db2674e9e47fb4e520",
-  }).save();
-}
-test();
+// async function test() {
+//   const articles = await Article.find();
+//   new Article({
+//     title: "titre 3",
+//     content: "sdjqcsqjdhqdhj",
+//     user: "65d442db2674e9e47fb4e520",
+//   }).save();
+// }
+// test();

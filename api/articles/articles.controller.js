@@ -23,10 +23,11 @@ class ArticleController {
   async delete(req, res, next) {
     try {
       const id = req.params.id;
+
       await articlesService.delete(id);
       res.io.emit("article:delete", { id });
       res.status(204).send();
-    } catch (error) {
+    } catch (err) {
       next(err);
     }
   }
